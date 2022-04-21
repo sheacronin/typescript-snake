@@ -23,7 +23,8 @@ const snake: {
     move: (direction: Direction[keyof Direction]) => void;
     eat: () => void;
     die: () => void;
-    _checkIfHitWall: () => void;
+    _checkIfHitWall: () => boolean;
+    _checkIfHitTail: () => boolean;
 } = {
     x: CANVAS_WIDTH_HEIGHT / 2 - SINGLE_GRID_SIZE,
     y: CANVAS_WIDTH_HEIGHT / 2 - SINGLE_GRID_SIZE,
@@ -56,14 +57,10 @@ const snake: {
 
         context.fillRect(snake.x, snake.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
 
-        const shouldDie = this._checkIfHitWall();
-        if (shouldDie) {
-            return this.die();
-        }
-
         if (this.x === this.food.x - 5 && this.y === this.food.y - 5) {
             console.log('snake eats!');
             this.eat();
+            console.log(this.tailPositions);
         } else {
             context.clearRect(
                 this.tailPositions[0].x,
@@ -72,6 +69,12 @@ const snake: {
                 SINGLE_GRID_SIZE
             );
             this.tailPositions.shift();
+        }
+
+        const shouldDie = this._checkIfHitWall() || this._checkIfHitTail();
+        if (shouldDie) {
+            this.tailPositions = [];
+            return this.die();
         }
 
         this.movingTimeoutId = setTimeout(() => this.move(direction), 100);
@@ -100,6 +103,13 @@ const snake: {
         } else {
             return false;
         }
+    },
+
+    _checkIfHitTail() {
+        return this.tailPositions.some(
+            (coords: Coordinates) =>
+                coords.x === snake.x && coords.y === snake.y
+        );
     },
 };
 

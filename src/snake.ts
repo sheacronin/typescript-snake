@@ -17,12 +17,7 @@ const snake = {
     move(direction: Direction[keyof Direction]) {
         clearTimeout(this.movingTimeoutId);
 
-        context.clearRect(
-            snake.x,
-            snake.y,
-            snake.x + SINGLE_GRID_SIZE,
-            snake.y + SINGLE_GRID_SIZE
-        );
+        context.clearRect(snake.x, snake.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
 
         switch (direction) {
             case 'ArrowRight':

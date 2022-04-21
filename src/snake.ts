@@ -26,22 +26,43 @@ const snake = {
 
         switch (direction) {
             case 'ArrowRight':
-                snake.x += SINGLE_GRID_SIZE / 2;
+                snake.x += SINGLE_GRID_SIZE;
                 break;
             case 'ArrowLeft':
-                snake.x -= SINGLE_GRID_SIZE / 2;
+                snake.x -= SINGLE_GRID_SIZE;
                 break;
             case 'ArrowUp':
-                snake.y -= SINGLE_GRID_SIZE / 2;
+                snake.y -= SINGLE_GRID_SIZE;
                 break;
             case 'ArrowDown':
-                snake.y += SINGLE_GRID_SIZE / 2;
+                snake.y += SINGLE_GRID_SIZE;
                 break;
         }
 
         context.fillRect(snake.x, snake.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
 
+        const shouldDie = this._checkIfHitWall();
+        if (shouldDie) {
+            return this.die();
+        }
+
         this.movingTimeoutId = setTimeout(() => this.move(direction), 100);
+    },
+    die() {
+        clearTimeout(this.movingTimeoutId);
+        console.log('YOU DIED');
+    },
+    _checkIfHitWall() {
+        if (
+            snake.x < 0 ||
+            snake.y < 0 ||
+            snake.x > CANVAS_WIDTH_HEIGHT - SINGLE_GRID_SIZE ||
+            snake.y > CANVAS_WIDTH_HEIGHT - SINGLE_GRID_SIZE
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     },
 };
 

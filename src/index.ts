@@ -6,3 +6,4 @@ import Food from './food';
 snake.initialize();
 const food = new Food();
 food.create();
+snake.food = food;

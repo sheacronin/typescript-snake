@@ -1,4 +1,5 @@
 import { CANVAS_WIDTH_HEIGHT, SINGLE_GRID_SIZE, context } from './canvas';
+import Food from './food';
 
 type Direction = {
     right: 'ArrowRight';
@@ -7,17 +8,36 @@ type Direction = {
     up: 'ArrowDown';
 };
 
-const snake = {
+type Coordinates = {
+    x: number;
+    y: number;
+};
+
+const snake: {
+    x: number;
+    y: number;
+    tailPositions: Coordinates[];
+    length: number;
+    food?: Food;
+    initialize: () => void;
+    move: (direction: Direction[keyof Direction]) => void;
+    eat: () => void;
+    die: () => void;
+    _checkIfHitWall: () => void;
+} = {
     x: CANVAS_WIDTH_HEIGHT / 2 - SINGLE_GRID_SIZE,
     y: CANVAS_WIDTH_HEIGHT / 2 - SINGLE_GRID_SIZE,
+    tailPositions: [],
     length: 1,
+
     initialize() {
         context.fillRect(snake.x, snake.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
     },
-    move(direction: Direction[keyof Direction]) {
+
+    move(direction) {
         clearTimeout(this.movingTimeoutId);
 
-        context.clearRect(snake.x, snake.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
+        this.tailPositions.push({ x: snake.x, y: snake.y });
 
         switch (direction) {
             case 'ArrowRight':
@@ -41,12 +61,34 @@ const snake = {
             return this.die();
         }
 
+        if (this.x === this.food.x - 5 && this.y === this.food.y - 5) {
+            console.log('snake eats!');
+            this.eat();
+        } else {
+            context.clearRect(
+                this.tailPositions[0].x,
+                this.tailPositions[0].y,
+                SINGLE_GRID_SIZE,
+                SINGLE_GRID_SIZE
+            );
+            this.tailPositions.shift();
+        }
+
         this.movingTimeoutId = setTimeout(() => this.move(direction), 100);
     },
+
+    eat() {
+        this.length++;
+        const newFood = new Food();
+        newFood.create();
+        this.food = newFood;
+    },
+
     die() {
         clearTimeout(this.movingTimeoutId);
         console.log('YOU DIED');
     },
+
     _checkIfHitWall() {
         if (
             snake.x < 0 ||

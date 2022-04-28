@@ -16,12 +16,14 @@ class Snake {
     length: number;
     food?: Food;
     movingTimeoutId?: NodeJS.Timeout;
+    movingInDirection?: Direction;
 
     constructor() {
         this.x = CANVAS_WIDTH_HEIGHT / 2 - SINGLE_GRID_SIZE;
         this.y = CANVAS_WIDTH_HEIGHT / 2 - SINGLE_GRID_SIZE;
         this.tailPositions = [];
         this.length = 1;
+        this.movingInDirection = null;
     }
 
     create() {
@@ -29,6 +31,17 @@ class Snake {
     }
 
     move(direction: Direction) {
+        if (this.movingInDirection && this.length > 1) {
+            if (
+                (this.movingInDirection === 'left' && direction === 'right') ||
+                (this.movingInDirection === 'right' && direction === 'left') ||
+                (this.movingInDirection === 'up' && direction === 'down') ||
+                (this.movingInDirection === 'down' && direction === 'up')
+            ) {
+                console.log('cannot move in opposite direction');
+                return;
+            }
+        }
         clearTimeout(this.movingTimeoutId);
 
         this.tailPositions.push({ x: this.x, y: this.y });
@@ -51,6 +64,7 @@ class Snake {
         context.fillRect(this.x, this.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
 
         events.emit('snakeMoves', null);
+        this.movingInDirection = direction;
 
         const shouldDie = this._checkIfHitWall() || this._checkIfHitTail();
         if (shouldDie) {

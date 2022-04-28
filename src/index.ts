@@ -4,6 +4,7 @@ import Food from './food';
 import { context, CANVAS_WIDTH_HEIGHT } from './canvas';
 import Snake from './snake';
 import events from './events';
+import messages from './messages';
 
 let snake: Snake;
 let food: Food;
@@ -21,6 +22,7 @@ const restartBtn = document.getElementById('restart-btn');
 restartBtn.addEventListener('click', () => {
     // Clear entire canvas.
     context.clearRect(0, 0, CANVAS_WIDTH_HEIGHT, CANVAS_WIDTH_HEIGHT);
+    messages.clear();
     startGame();
 });
 
@@ -34,9 +36,10 @@ events.on('snakeMoves', () => {
     }
 });
 
-events.on('snakeDies', () =>
-    document.removeEventListener('keydown', moveSnakeWithKeys)
-);
+events.on('snakeDies', () => {
+    document.removeEventListener('keydown', moveSnakeWithKeys);
+    messages.die();
+});
 
 function doesSnakeTouchFood() {
     if (snake.x === food.x - 5 && snake.y === food.y - 5) {

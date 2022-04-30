@@ -39,7 +39,7 @@ class Snake {
                 (this.movingInDirection === 'up' && direction === 'down') ||
                 (this.movingInDirection === 'down' && direction === 'up')
             ) {
-                console.log('cannot move in opposite direction');
+                // Cannot move in the opposite direction
                 return;
             }
         }
@@ -93,7 +93,6 @@ class Snake {
 
     die() {
         clearTimeout(this.movingTimeoutId);
-        console.log('YOU DIED');
         events.emit('snakeDies', null);
     }
 

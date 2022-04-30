@@ -11,7 +11,6 @@ class Food {
         this.y = this._getRandomCoordinate();
         context.arc(this.x, this.y, SINGLE_GRID_SIZE / 2, 0, Math.PI * 2);
         context.fill();
-        console.log('food', this.x, this.y);
     }
 
     _getRandomCoordinate() {

@@ -12,7 +12,6 @@ let food: Food;
 const arrowButtons = Array.from(
     document.getElementsByClassName('arrow-button')
 );
-console.log(arrowButtons);
 
 function startGame() {
     snake = new Snake();
@@ -28,6 +27,8 @@ function startGame() {
 
 const restartBtn = document.getElementById('restart-btn');
 restartBtn.addEventListener('click', () => {
+    // In case snake is not already dead
+    snake.die();
     // Clear entire canvas.
     context.clearRect(0, 0, CANVAS_WIDTH_HEIGHT, CANVAS_WIDTH_HEIGHT);
     messages.clear();
@@ -46,6 +47,9 @@ events.on('snakeMoves', () => {
 
 events.on('snakeDies', () => {
     document.removeEventListener('keydown', moveSnakeWithKeys);
+    arrowButtons.forEach((button) =>
+        button.removeEventListener('click', moveSnakeWithButtons)
+    );
     messages.die();
 });
 
@@ -54,7 +58,6 @@ function doesSnakeTouchFood() {
         snake.x === food.x - SINGLE_GRID_SIZE / 2 &&
         snake.y === food.y - SINGLE_GRID_SIZE / 2
     ) {
-        console.log('snake touched food');
         return true;
     } else {
         return false;

@@ -2,12 +2,17 @@ import './reset.css';
 import './style.css';
 import Food from './food';
 import { context, CANVAS_WIDTH_HEIGHT, SINGLE_GRID_SIZE } from './canvas';
-import Snake from './snake';
+import Snake, { Direction } from './snake';
 import events from './events';
 import messages from './messages';
 
 let snake: Snake;
 let food: Food;
+
+const arrowButtons = Array.from(
+    document.getElementsByClassName('arrow-button')
+);
+console.log(arrowButtons);
 
 function startGame() {
     snake = new Snake();
@@ -16,6 +21,9 @@ function startGame() {
     food.create();
     snake.food = food;
     document.addEventListener('keydown', moveSnakeWithKeys);
+    arrowButtons.forEach((button) =>
+        button.addEventListener('click', moveSnakeWithButtons)
+    );
 }
 
 const restartBtn = document.getElementById('restart-btn');
@@ -51,6 +59,10 @@ function doesSnakeTouchFood() {
     } else {
         return false;
     }
+}
+
+function moveSnakeWithButtons(e: PointerEvent) {
+    snake.move((<HTMLButtonElement>e.target).id as Direction);
 }
 
 function moveSnakeWithKeys(e: KeyboardEvent) {

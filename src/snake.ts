@@ -2,7 +2,7 @@ import { CANVAS_WIDTH_HEIGHT, SINGLE_GRID_SIZE, context } from './canvas';
 import Food from './food';
 import events from './events';
 
-type Direction = 'up' | 'right' | 'down' | 'left';
+export type Direction = 'up' | 'right' | 'down' | 'left';
 
 type Coordinates = {
     x: number;

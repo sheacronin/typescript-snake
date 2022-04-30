@@ -5,6 +5,7 @@ class Food {
     y: number;
 
     create() {
+        context.fillStyle = '#5747D6';
         context.beginPath();
         this.x = this._getRandomCoordinate();
         this.y = this._getRandomCoordinate();
@@ -18,8 +19,8 @@ class Food {
             Math.floor(
                 (Math.random() * CANVAS_WIDTH_HEIGHT) / SINGLE_GRID_SIZE
             ) *
-                10 +
-            5
+                SINGLE_GRID_SIZE +
+            SINGLE_GRID_SIZE / 2
         );
     }
 }

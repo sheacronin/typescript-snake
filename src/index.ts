@@ -1,7 +1,7 @@
 import './reset.css';
 import './style.css';
 import Food from './food';
-import { context, CANVAS_WIDTH_HEIGHT } from './canvas';
+import { context, CANVAS_WIDTH_HEIGHT, SINGLE_GRID_SIZE } from './canvas';
 import Snake from './snake';
 import events from './events';
 import messages from './messages';
@@ -42,7 +42,10 @@ events.on('snakeDies', () => {
 });
 
 function doesSnakeTouchFood() {
-    if (snake.x === food.x - 5 && snake.y === food.y - 5) {
+    if (
+        snake.x === food.x - SINGLE_GRID_SIZE / 2 &&
+        snake.y === food.y - SINGLE_GRID_SIZE / 2
+    ) {
         console.log('snake touched food');
         return true;
     } else {

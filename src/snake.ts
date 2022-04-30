@@ -27,6 +27,7 @@ class Snake {
     }
 
     create() {
+        context.fillStyle = '#72891f';
         context.fillRect(this.x, this.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
     }
 
@@ -61,6 +62,7 @@ class Snake {
                 break;
         }
 
+        context.fillStyle = '#72891f';
         context.fillRect(this.x, this.y, SINGLE_GRID_SIZE, SINGLE_GRID_SIZE);
 
         events.emit('snakeMoves', null);

@@ -1,4 +1,4 @@
-export const CANVAS_WIDTH_HEIGHT = 300;
+export const CANVAS_WIDTH_HEIGHT = 600;
 export const SINGLE_GRID_SIZE = CANVAS_WIDTH_HEIGHT / 30;
 
 const gameCanvas = <HTMLCanvasElement>document.getElementById('game-canvas');

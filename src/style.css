@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: no-repeat linear-gradient(-45deg, #d2ddab, #e2e6d4);
+    height: 100vh;
+    font-family: 'Manrope', sans-serif;
+}
+
 main {
     text-align: center;
 }
@@ -5,11 +17,43 @@ main {
 h1 {
     font-size: 40px;
     font-weight: bold;
-    margin-top: 50px;
+    padding-top: 50px;
+    color: #8a195f;
+    text-shadow: 3px 3px white;
+}
+
+button {
+    background: linear-gradient(45deg, #8a195f, #d61c90);
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #d61c90;
 }
 
 #game-canvas {
     border: 1px solid black;
     margin: 50px auto;
     display: block;
+    width: 400px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    background-color: white;
+}
+
+#messages {
+    padding-top: 20px;
+}
+
+@media (max-width: 650px) {
+    #game-canvas {
+        width: 300px;
+    }
 }
